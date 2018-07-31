@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.meitu.qihangni.scrollpageproject.ScrollPageLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@id/id_scrollpagelayout_topview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00ffff" >
+        <!--<TextView-->
+            <!--android:text="顶部"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="400dp" />-->
+
+    </RelativeLayout>
+
+    <com.meitu.qihangni.scrollpageproject.SimpleViewPagerIndicator
+        android:id="@id/id_scrollpagelayout_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#ffffffff">
+    </com.meitu.qihangni.scrollpageproject.SimpleViewPagerIndicator>
+
+    <android.support.v4.view.ViewPager
+        android:id="@id/id_scrollpagelayout_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v4.view.ViewPager>
+
+</com.meitu.qihangni.scrollpageproject.ScrollPageLayout>
