@@ -96,7 +96,7 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
 
     @Override
     public void onStopNestedScroll(View target) {
-//        Log.i(TAG, "onStopNestedScroll: " + mDy);
+        Log.i(TAG, "onStopNestedScroll: " + mDy);
         if (mDy == 0) {
             return;
         }
@@ -278,6 +278,7 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        mDy = 0;
 //        Log.i(TAG, " event: " + event.toString());
         initVelocityTrackerIfNotExists();
         mVelocityTracker.addMovement(event);
