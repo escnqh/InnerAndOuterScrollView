@@ -39,6 +39,7 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
     private int mMinHight = 400;
     private int mAnimateTime = 300;
     private boolean isSetAnimateTime = true;
+    private int mDy = 0;
 
     public ScrollPageLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -84,18 +85,22 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
      */
     @Override
     public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-        Log.i(TAG, "onStartNestedScroll");
+//        Log.i(TAG, "onStartNestedScroll");
         return true;
     }
 
     @Override
     public void onNestedScrollAccepted(View child, View target, int nestedScrollAxes) {
-        Log.i(TAG, "onNestedScrollAccepted");
+//        Log.i(TAG, "onNestedScrollAccepted");
     }
 
     @Override
     public void onStopNestedScroll(View target) {
-//        Log.i(TAG, "onStopNestedScroll");
+//        Log.i(TAG, "onStopNestedScroll: " + mDy);
+        if (mDy == 0) {
+            return;
+        }
+        animateScroll(mDy, computeDuration(mDy), false);
     }
 
     @Override
@@ -109,15 +114,18 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
      */
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
+        mDy = 0;
         boolean hiddenTop = dy > 0 && getScrollY() < (mMaxHight);
-        Log.i(TAG, " hiddenTop: " + hiddenTop + " getScrollY: " + getScrollY() + " mTopViewHeight: " + mTopViewHeight);
+//        Log.i(TAG, " hiddenTop: " + hiddenTop + " getScrollY: " + getScrollY() + " mTopViewHeight: " + mTopViewHeight);
         boolean showTop = dy < 0 && getScrollY() >= 0 && !target.canScrollVertically(-1);
         if (hiddenTop || showTop) {
 //            拖拽
-//            scrollBy(0, dy);
-            animateScroll(dy, computeDuration(dy), false);
+            scrollBy(0, dy);
+//            animateScroll(dy, computeDuration(dy), false);
             consumed[1] = dy;
+            mDy = dy;
         }
+
     }
 
     /**
@@ -145,14 +153,14 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
 
     @Override
     public boolean onNestedPreFling(View target, float velocityX, float velocityY) {
-        Log.i(TAG, "onNestedPreFling");
+//        Log.i(TAG, "onNestedPreFling");
         //不做拦截 可以传递给子View
         return false;
     }
 
     @Override
     public int getNestedScrollAxes() {
-        Log.i(TAG, "getNestedScrollAxes");
+//        Log.i(TAG, "getNestedScrollAxes");
         return 0;
     }
 
@@ -201,7 +209,7 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
             mOffsetAnimator.cancel();
         }
         mOffsetAnimator.setDuration(Math.min(duration, 600));
-        Log.i(TAG, "mOffsetAnimator duration" + mOffsetAnimator.getDuration());
+//        Log.i(TAG, "mOffsetAnimator duration" + mOffsetAnimator.getDuration());
         if (velocityY >= 0) {
             mOffsetAnimator.setIntValues(currentOffset, topHeight);
             mOffsetAnimator.start();
@@ -270,7 +278,7 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.i(TAG, " event: " + event.toString());
+//        Log.i(TAG, " event: " + event.toString());
         initVelocityTrackerIfNotExists();
         mVelocityTracker.addMovement(event);
         int action = event.getAction();
