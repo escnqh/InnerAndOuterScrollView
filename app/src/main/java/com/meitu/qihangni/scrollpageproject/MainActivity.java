@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+
             }
 
             @Override

@@ -97,10 +97,12 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
     @Override
     public void onStopNestedScroll(View target) {
         Log.i(TAG, "onStopNestedScroll: " + mDy);
-        if (mDy == 0) {
-            return;
+        boolean hiddenTop = mDy > 0 && getScrollY() < (mMaxHight);
+        Log.i(TAG, " hiddenTop: " + hiddenTop + " getScrollY: " + getScrollY() + " mTopViewHeight: " + mTopViewHeight);
+        boolean showTop = mDy < 0 && getScrollY() >= 0 && !target.canScrollVertically(-1);
+        if (hiddenTop || showTop) {
+            animateScroll(mDy, computeDuration(mDy), false);
         }
-        animateScroll(mDy, computeDuration(mDy), false);
     }
 
     @Override
@@ -114,9 +116,10 @@ public class ScrollPageLayout extends LinearLayout implements NestedScrollingPar
      */
     @Override
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
-        mDy = 0;
+// 不可以置为零，会导致悬停情况下不回弹
+//        mDy = 0;
         boolean hiddenTop = dy > 0 && getScrollY() < (mMaxHight);
-//        Log.i(TAG, " hiddenTop: " + hiddenTop + " getScrollY: " + getScrollY() + " mTopViewHeight: " + mTopViewHeight);
+        Log.i(TAG, " hiddenTop: " + hiddenTop + " getScrollY: " + getScrollY() + " mTopViewHeight: " + mTopViewHeight);
         boolean showTop = dy < 0 && getScrollY() >= 0 && !target.canScrollVertically(-1);
         if (hiddenTop || showTop) {
 //            拖拽
